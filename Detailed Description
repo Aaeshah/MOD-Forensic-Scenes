@@ -1,0 +1,80 @@
+Title
+Beyond First Glance (BFG): A Manner‑of‑Death Forensic 3D Benchmark Dataset
+
+Summary
+Beyond First Glance provides a metrically scaled, forensics‑focused 3D benchmark comparing terrestrial LiDAR scanning and 3D Gaussian Splatting (3DGS) across five simulated scenes aligned with medicolegal manner‑of‑death (MOD) categories: Natural, Accident, Suicide, Homicide, and Undetermined. The repository packages paired LiDAR point clouds/meshes and pretrained 3DGS models with synchronized 2D photographs and short videos, evidence markers, region‑of‑interest (ROI) annotations, and a reproducible evaluation suite covering geometry, coverage, efficiency, and robustness. It enables quantitative, apples‑to‑apples comparisons and supports best‑practice workflows for documentation, measurement, and visualization in forensic investigations.
+
+What’s included
+
+Five MOD scenes: Natural, Accident, Suicide, Homicide, Undetermined.
+Modalities and assets:
+LiDAR: metrically scaled point clouds and meshes suitable for measurement.
+3DGS: pretrained Gaussian splat models for photorealistic, real‑time viewing.
+2D media: synchronized photographs and short videos used for 3DGS training/validation.
+Annotations: evidence markers and ROI labels aligned across modalities.
+Metadata: capture notes, scale factors, coordinate frames, and camera intrinsics/extrinsics (where applicable).
+Evaluation suite (notebooks; A.* = geometry/accuracy, B.* = density/coverage/efficiency/robustness):
+A.1.Symmetric_Chamfer_Distance_and_Distance_Error.ipynb
+A.2.Fscore_at_Distance_Thresholds.ipynb
+A.3.Point-to-Plane_RMSE.ipynb
+A.4.edge_curvature_preservation.ipynb
+B.1.Point_Density_and_Resolution.ipynb
+B.2.Processing_Time_and_Computation_Requirements.ipynb
+B.3.Coverage_and_Scalability.ipynb
+B.4.Robustness_and_Environmental_Challenges.ipynb
+Benchmark protocol and metrics
+
+Geometry fidelity: distance‑to‑reference, symmetric Chamfer distance (A.1), point‑to‑plane RMSE with residuals (A.3), edge/curvature preservation (A.4).
+Cross‑modal match accuracy: thresholded F‑scores at 1/2/5 cm (A.2).
+Sampling and coverage: point density, nearest‑neighbor spacing, scene coverage (B.1, B.3).
+Efficiency: processing time and peak memory (B.2).
+Robustness: sensitivity to controlled perturbations and environmental challenges (B.4).
+Key findings (from the included study)
+
+LiDAR achieves lower mean/median distance‑to‑reference errors across all scenes; inter‑modality symmetric Chamfer distances show significant gaps (mean ≈ 5.74).
+Cross‑modal F‑scores increase monotonically with tolerance (macro‑F1 ≈ 0.012 @ 1 cm, 0.039 @ 2 cm, 0.134 @ 5 cm), with the Homicide scene highest at F1 ≈ 0.267 @ 5 cm.
+3DGS offers operational advantages: ≈ 383× faster average model loading and ≈ 10× lower peak memory than LiDAR meshes/point clouds at test scales.
+Both modalities exhibit similar sensitivity to minor synthetic vertex noise at the tested levels.
+Recommended workflow: use LiDAR (or LiDAR‑regularized radiance fields) for geometry‑critical measurements and 3DGS for rapid, photorealistic visualization; report results with standardized metrics to enable reproducible MOD benchmarking.
+Intended use
+
+Forensic science R&D, training, and quantitative benchmarking.
+Method development for scene reconstruction, registration, and measurement under MOD‑relevant constraints.
+Cross‑modal evaluation of geometry fidelity vs. operational efficiency.
+Data organization (typical layout)
+
+scenes/
+[scene_name]_{natural|accident|suicide|homicide|undetermined}/
+lidar/ (point clouds, meshes, scale/transform metadata)
+3dgs/ (pretrained models and viewing configs)
+images/ and videos/ (capture sets used for 3DGS)
+annotations/ (evidence markers, ROIs)
+metadata/ (camera intrinsics/extrinsics, units, notes)
+benchmarks/
+notebooks/ (A.1–A.4, B.1–B.4 as listed above)
+scripts/ (helpers for preprocessing, alignment, metric export if provided)
+docs/ (dataset card, scene descriptions, benchmark protocol)
+Getting started
+
+Ensure consistent metric scale across modalities; use provided transforms/units.
+Optional viewers: any LiDAR/mesh tool supporting PLY/OBJ/GLB and a 3DGS viewer/renderer.
+Reproduce baseline metrics by running the notebooks in the A.* then B.* order; export per‑scene and macro summaries.
+Baseline reporting
+
+Provide per‑scene and macro results for A.1–A.4, B.1–B.4.
+Recommended F‑score thresholds: 1 cm, 2 cm, 5 cm for cross‑modal overlap.
+Include timing and peak memory for load, render, and metric computation steps.
+Ethics and safety
+
+Scenes are simulated; no real victims or personally identifiable information.
+Content is intended for professional education and research; avoid misuse or sensational depiction.
+Follow local regulations and institutional policies when using forensic imagery.
+Licensing and citation
+
+License: see LICENSE (suggested: CC BY 4.0 for data; MIT/Apache‑2.0 for code; confirm before release).
+Please cite:
+Beyond First Glance: A Quantitative Benchmark of 3D LiDAR Scanning vs Gaussian Splatting for Manner‑of‑Death Forensic Scene, Year, Venue (update with final bibliographic details).
+Contact and contributions
+
+Issues and pull requests are welcome for metric implementations, loaders, and viewers.
+For inquiries about scenes, annotations, or evaluation details, open a repository issue or contact the maintainers.
